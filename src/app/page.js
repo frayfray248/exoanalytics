@@ -2,6 +2,7 @@
 import StyleWrapper from "./styles/StyleWrapper"
 
 // components
+import Nav from "@/components/Nav"
 import Main from "../components/Main"
 
 async function getData() {
@@ -31,6 +32,7 @@ export default async function Page() {
 
     return (
         <StyleWrapper>
+            <Nav/>
             <Main planets={planets}/>
         </StyleWrapper>
     )

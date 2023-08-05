@@ -20,7 +20,11 @@ const GlobalStyles = createGlobalStyle`
         width: 100%;
 
         /* colors */
+        color: ${props => props.theme.colors.text};
         background-color: ${props => props.theme.colors.mainBackground};
+
+        /* typography */
+        font-family: 'Courier New', monospace;
     }
 
 `
