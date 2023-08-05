@@ -26,10 +26,12 @@ async function getData() {
 
 export default async function Page() {
 
+    const planets = await getData()
 
 
-  return (
+    return (
         <StyleWrapper>
+            <Main planets={planets}/>
         </StyleWrapper>
-  )
+    )
 }

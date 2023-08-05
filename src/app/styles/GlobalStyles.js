@@ -18,7 +18,6 @@ const GlobalStyles = createGlobalStyle`
 
         /* sizing */
         width: 100%;
-        min-height: 100%;
 
         /* colors */
         background-color: ${props => props.theme.colors.mainBackground};

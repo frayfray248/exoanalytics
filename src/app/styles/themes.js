@@ -1,6 +1,7 @@
 export const mainTheme = {
     colors: {
-        mainBackground: 'var(--sage-gray)'
+        mainBackground: 'var(--slate-gray)',
+        secBackground: 'var(--pale-slate-gray)',
     }
     
 }
