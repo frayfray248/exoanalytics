@@ -1,7 +1,11 @@
+import StyleWrapper from "./styles/StyleWrapper"
+
+export default async function Page() {
 
 
-export default function Home() {
+
   return (
-    <div>hello world</div>
+        <StyleWrapper>
+        </StyleWrapper>
   )
 }
