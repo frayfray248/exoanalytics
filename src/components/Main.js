@@ -1,11 +1,7 @@
-"use client";
+'use client'
 
 // modules
 import styled from 'styled-components'
-
-// components
-import ChartContainer from './ChartContainer';
-import PlanetDiscoveryLineChart from './PlanetDiscoveryLineChart';
 
 const StyledMain = styled.main`
     /* positioning */
@@ -18,12 +14,10 @@ const StyledMain = styled.main`
     background-color: ${props => props.theme.colors.secBackground};
 `
 
-const Main = ({ planets }) => {
+const Main = ({ children }) => {
     return (
         <StyledMain>
-            <ChartContainer>
-                <PlanetDiscoveryLineChart planets={planets} />
-            </ChartContainer>
+                { children }
         </StyledMain>
     )
 }

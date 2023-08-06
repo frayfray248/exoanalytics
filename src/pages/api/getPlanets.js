@@ -13,8 +13,6 @@ async function getPlanets() {
 
 export default async function (req, res) {
 
-    
-
     const planets = await getPlanets()
     res.status(200).json(planets)
 

@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import styled from 'styled-components'
 
@@ -34,14 +34,6 @@ const StyledNavItem = styled.li`
     cursor: pointer;
     
 `
-
-
-const StyledNavLink = styled(({ href, children, className }) => <a className={className} href={href}>{children}</a>)`
-    
-    
-
-`
-
 
 const Nav = () => {
 

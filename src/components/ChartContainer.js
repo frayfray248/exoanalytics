@@ -10,7 +10,6 @@
     see: https://www.chartjs.org/docs/latest/configuration/responsive.html
 */
 
-"use client";
 
 // modules
 import styled from 'styled-components'
