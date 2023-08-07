@@ -2,6 +2,7 @@
 
 // modules
 import { useEffect, useState } from 'react'
+import getPlanetCountByYear from '@/app/utils/getPlanetCountByYear';
 
 // components
 import Container from './Container';
@@ -9,33 +10,34 @@ import TimeChart from "./TimeChart";
 
 const TimeChartView = () => {
 
-    const [planetCountByYear, setPlanetCountByYear] = useState([])
+    // state
+    const [years, setYears] = useState([])
     const [datasets, setDatasets] = useState([])
 
+    // effects
     useEffect(() => {
         (async () => {
             try {
 
-                const query = "SELECT+disc_year,+COUNT(*)+AS+planet_count+FROM+ps+WHERE+disc_year+IS+NOT+NULL+GROUP+BY+disc_year+ORDER+BY+disc_year+ASC"
+                // fetching exoplanet data
+                const data = await getPlanetCountByYear()
 
-                const res = await fetch(`/api/planets?query=${query}`,
+                // making chart datasets from fetched data
+                setDatasets([
                     {
-                        method: 'GET',
-                        redirect: 'follow',
-                        next: {
-                            revalidate: 3600
-                        }
-                    })
+                        // dataset for planets discovered each year
+                        label: 'Planets discovered',
+                        data: data.map(planet => planet.planet_count)
+                    },
+                    {
+                        // dataset for cumulative planets discovered
+                        label: 'Cumulative planets discovered',
+                        data: data.map(planet => planet.planet_count).reduce((a, x, i) => [...a, x + (a[i - 1] || 0)], [])
+                    },
+                ])
 
-                if (!res.ok) {
-
-                    throw new Error('Failed to fetch data')
-                }
-
-                const data = await res.json()
-
-                setPlanetCountByYear(data)
-
+                // making chart horizontal axis labels from fetched data
+                setYears(data.map(planet => planet.disc_year))
 
             } catch (error) {
                 alert(error)
@@ -43,73 +45,26 @@ const TimeChartView = () => {
         })()
     }, [])
 
-
-
-    const planetsDiscoveredByYearOnChange = (event) => {
-
-        if (event.target.checked) {
-
-            const planetCounts = planetCountByYear.map(planet => planet.planet_count)
-
-
-
-            setDatasets([...datasets,
-            {
-                id: 1,
-                label: 'Planets discovered',
-                data: planetCounts,
-            },
-            ])
-
+    const events = [
+        {
+            year: 1995,
+            label: 'First exoplanet documented'
+        },
+        {
+            year: 2009,
+            label: 'Kepler launched'
+        },
+        {
+            year: 2021,
+            label: 'JWST launched'
         }
-        else {
-
-            setDatasets(datasets.filter(dataset => dataset.id !== 1))
-        }
-
-    }
-
-    const cumulativePlanetsDiscoveredByYearOnChange = (event) => {
-
-        if (event.target.checked) {
-
-            const planetCounts = planetCountByYear.map(planet => planet.planet_count)
-
-            const cumulativePlanetCounts = planetCounts.reduce((a, x, i) => [...a, x + (a[i - 1] || 0)], [])
-
-            setDatasets([...datasets,
-            {
-                id: 2,
-                label: 'Cumulative planets discovered',
-                data: cumulativePlanetCounts,
-            },
-            ])
-
-        }
-
-        else {
-
-            setDatasets(datasets.filter(dataset => dataset.id !== 2))
-        }
-
-    }
-
-    const years = planetCountByYear.map(planet => planet.disc_year)
+    ]
 
     return (
         <Container>
-            <h1>Planets discovered by year</h1>
-
-            <h2>Datasets:</h2>
-            <input type="checkbox" id="planetsDiscoveredByYear" name="planetsDiscoveredByYear" value="planetsDiscoveredByYear" onChange={planetsDiscoveredByYearOnChange} />
-            <label htmlFor="planetsDiscoveredByYear">Planets discovered by year</label>
-
-            <input type="checkbox" id="cumulativePlanetsDiscoveredByYear" name="cumulativePlanetsDiscoveredByYear" value="cumulativePlanetsDiscoveredByYear" onChange={cumulativePlanetsDiscoveredByYearOnChange}/>
-            <label htmlFor="cumulativePlanetsDiscoveredByYear">Cumulative planets discovered by year</label>
-
-            <TimeChart years={years} datasets={datasets} />
+            <h1>Exoplanets discovered over time</h1>
+            <TimeChart years={years} datasets={datasets} events={events} />
         </Container>
-
     )
 }
 

@@ -23,6 +23,12 @@ const StyledChartContainer = styled.div`
     height: 50vh;
     box-sizing: border-box;
     
+    /* colors */
+    background-color: ${props => props.theme.colors.chartBackground};
+
+    /* border */
+    border: 2px solid ${props => props.theme.colors.border};
+
     padding: 0 1rem;
 `
 

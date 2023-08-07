@@ -1,17 +1,21 @@
 // modules
 import styled from 'styled-components'
 
-const StyledContainer = styled.div`
-    
-    padding: 10px;
-`
 
-const Container = ({ children }) => {
+const Container = ({ children, className}) => {
     return (
-        <StyledContainer>
+        <div className={className}>
             {children}
-        </StyledContainer>
+        </div>
     )
 }
 
-export default Container
+const StyledContainer = styled(Container)`
+    
+    padding: 10px;
+    margin: 10px;
+    border: ${props => props.border? `2px solid ${props.theme.colors.border}` : 'none'};
+`
+
+
+export default StyledContainer
