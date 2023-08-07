@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import getPlanetCountByYear from '@/app/utils/getPlanetCountByYear';
 
 // components
-import Container from './Container';
+import Container from '../Container';
 import TimeChart from "./TimeChart";
 
 const TimeChartView = () => {

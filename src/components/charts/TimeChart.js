@@ -80,8 +80,6 @@ export default function ({ years, datasets, events }) {
             })),
     }
 
-    console.log(data)
-
     return (
         <ChartContainer>
             <Line

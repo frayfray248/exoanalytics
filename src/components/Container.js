@@ -13,7 +13,7 @@ const Container = ({ children, className}) => {
 const StyledContainer = styled(Container)`
     
     padding: 10px;
-    margin: 10px;
+    margin-bottom: 10px;
     border: ${props => props.border? `2px solid ${props.theme.colors.border}` : 'none'};
 `
 

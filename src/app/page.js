@@ -4,7 +4,8 @@ import StyleWrapper from "./styles/StyleWrapper"
 // components
 import Nav from "../components/Nav"
 import Main from "../components/Main"
-import TimeChartView from "@/components/TimeChartView"
+import TimeChartView from "@/components/charts/TimeChartView"
+import ScatterChart from "@/components/charts/ScatterChart"
 
 export default function Page() {
 
@@ -13,6 +14,7 @@ export default function Page() {
             <Nav />
             <Main>
                 <TimeChartView />
+                <ScatterChart />
             </Main>
         </StyleWrapper>
     )

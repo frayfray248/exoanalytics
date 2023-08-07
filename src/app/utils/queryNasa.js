@@ -1,6 +1,6 @@
-async function getPlanets(columns) {
-    
-    const res = await fetch(`/api/planets?query=select+${columns.join(',')}+from+ps`,
+async function queryNasa(query) {
+
+    const res = await fetch(`/api/planets?query=${query}`,
         {
             method: 'GET',
             redirect: 'follow'
@@ -16,4 +16,4 @@ async function getPlanets(columns) {
     return data
 }
 
-export default getPlanets
+export default queryNasa
