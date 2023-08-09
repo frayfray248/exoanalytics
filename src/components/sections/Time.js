@@ -6,9 +6,9 @@ import getPlanetCountByYear from '@/app/utils/getPlanetCountByYear';
 
 // components
 import Container from '../Container';
-import TimeChart from "./TimeChart";
+import TimeChart from "../charts/TimeChart";
 
-const TimeChartView = () => {
+const Time = () => {
 
     // state
     const [years, setYears] = useState([])
@@ -62,10 +62,10 @@ const TimeChartView = () => {
 
     return (
         <Container>
-            <h1>Exoplanets discovered over time</h1>
+            <h1>Time</h1>
             <TimeChart years={years} datasets={datasets} events={events} />
         </Container>
     )
 }
 
-export default TimeChartView;
+export default Time;
