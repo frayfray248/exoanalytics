@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react'
 
 // utils
-import getPlanetAggregateRows from '@/app/utils/getPlanetAggregateRows';
+import { getPlanetAggregateRows } from '@/app/utils/api';
 
 
 import Container from '../Container';

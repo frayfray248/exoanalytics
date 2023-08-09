@@ -2,7 +2,7 @@
 
 // modules
 import { useEffect, useState } from 'react'
-import getPlanetCountByYear from '@/app/utils/getPlanetCountByYear';
+import { getPlanetCountByYear } from '@/app/utils/api';
 
 // components
 import Container from '../Container';

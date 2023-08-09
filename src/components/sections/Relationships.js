@@ -6,11 +6,7 @@ import { useEffect, useState } from 'react'
 import ScatterChart from '../charts/ScatterChart'
 
 // utils
-import getPlanets from '@/app/utils/getPlanets'
-import queryNasa from '@/app/utils/queryNasa'
-
-// constants
-import { PLANET_COLUMN_NAMES } from '@/app/constants/nasaArchiveQueries'
+import { getPlanetColumnNames, getPlanetColumnValues } from '@/app/utils/api'
 
 import Container from '../Container';
 
@@ -28,7 +24,7 @@ const Relationships = () => {
         (async () => {
             try {
 
-                const data = await queryNasa(PLANET_COLUMN_NAMES)
+                const data = await getPlanetColumnNames()
 
                 setColumns(data.filter(column => column.datatype === 'double' || column.data_type === 'int'))
 
@@ -52,7 +48,7 @@ const Relationships = () => {
                     return
                 }
 
-                const data = await getPlanets([selectedX, selectedY])
+                const data = await getPlanetColumnValues([selectedX, selectedY])
 
                 setDataset(data.filter(planet => planet[selectedX] && planet[selectedY]).map(planet => ({ x: planet[selectedX], y: planet[selectedY] })))
 
