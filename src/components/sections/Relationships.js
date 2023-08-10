@@ -3,7 +3,9 @@
 // modules
 import { useEffect, useState } from 'react'
 
+// components
 import ScatterChart from '../charts/ScatterChart'
+import Select from '../Select'
 
 // utils
 import { getPlanetColumnNames, getPlanetColumnValues } from '@/app/utils/api'
@@ -82,16 +84,16 @@ const Relationships = () => {
         <Container>
             <h1>Relationships</h1>
             <Container border="true">
-                
                 <b>X Axis:</b>
-                <select id="scatterChartSelectX" onChange={handleAxisSelectChange}>
-                    {columns.map((column, index) => (<option key={index} value={column.column_name}>{column.description}</option>))}
-                </select>
+                <Select
+                    id="scatterChartSelectX"
+                    items={columns.map((column) => ({ value: column.column_name, text: column.description }))}
+                    changeHandler={handleAxisSelectChange} />
                 <b>Y Axis:</b>
-                <select id="scatterChartSelectY" onChange={handleAxisSelectChange}>
-                    {columns.map((column, index) => (<option key={index} value={column.column_name}>{column.description}</option>))}
-                </select>
-
+                <Select
+                    id="scatterChartSelectY"
+                    items={columns.map((column) => ({ value: column.column_name, text: column.description }))}
+                    changeHandler={handleAxisSelectChange} />
             </Container>
 
             <ScatterChart dataset={dataset} xAxisLabel={xAxisLabel} yAxisLabel={yAxisLabel} />

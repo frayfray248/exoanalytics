@@ -1,1 +1,0 @@
-export const PLANET_COLUMN_NAMES = 'SELECT+column_name,description,datatype+FROM+tap_schema.columns+WHERE+TABLE_NAME+like+%27ps%27'

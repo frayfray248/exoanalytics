@@ -10,15 +10,16 @@ import {
     Title,
     Tooltip,
     Legend,
-    ArcElement
+    ArcElement,
+    BarElement
 } from 'chart.js'
-import { Pie } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import annotationPlugin from 'chartjs-plugin-annotation'
 
 // components
 import ChartContainer from './ChartContainer'
 
-const PieChart = ({ dataArray, labels }) => {
+const BarChart = ({ dataArray, labels }) => {
 
     ChartJS.register(
         CategoryScale,
@@ -29,7 +30,8 @@ const PieChart = ({ dataArray, labels }) => {
         Tooltip,
         Legend,
         annotationPlugin,
-        ArcElement
+        ArcElement,
+        BarElement
     )
 
     const options = {
@@ -52,9 +54,9 @@ const PieChart = ({ dataArray, labels }) => {
 
     return (
         <ChartContainer>
-            <Pie data={data} options={options} />
+            <Bar data={data} options={options} />
         </ChartContainer>
     )
 }
 
-export default PieChart
+export default BarChart

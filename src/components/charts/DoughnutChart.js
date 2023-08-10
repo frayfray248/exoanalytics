@@ -12,13 +12,13 @@ import {
     Legend,
     ArcElement
 } from 'chart.js'
-import { Pie } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import annotationPlugin from 'chartjs-plugin-annotation'
 
 // components
 import ChartContainer from './ChartContainer'
 
-const PieChart = ({ dataArray, labels }) => {
+const DoughnutChart = ({ dataArray, labels }) => {
 
     ChartJS.register(
         CategoryScale,
@@ -52,9 +52,9 @@ const PieChart = ({ dataArray, labels }) => {
 
     return (
         <ChartContainer>
-            <Pie data={data} options={options} />
+            <Doughnut data={data} options={options} />
         </ChartContainer>
     )
 }
 
-export default PieChart
+export default DoughnutChart

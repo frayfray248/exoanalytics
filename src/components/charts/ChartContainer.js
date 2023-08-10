@@ -20,7 +20,7 @@ const StyledChartContainer = styled.div`
 
     /* sizing */
     width: 100%;
-    height: 50vh;
+    min-height: 50vh;
     box-sizing: border-box;
     
     /* colors */
