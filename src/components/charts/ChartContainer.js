@@ -14,6 +14,9 @@
 // modules
 import styled from 'styled-components'
 
+// components
+import Loader from '../Loader'
+
 const StyledChartContainer = styled.div`
     /* positioning */
     position: relative;
@@ -32,10 +35,17 @@ const StyledChartContainer = styled.div`
     padding: 0 1rem;
 `
 
-const ChartContainer = ({ children }) => {
+const ChartContainer = ({ children, showLoading }) => {
     return (
         <StyledChartContainer>
-            {children}
+            {
+                showLoading ?
+                (
+                    <Loader loading={true} width="100%" height='50vh' />
+                ) : (
+                    children
+                )
+            }
         </StyledChartContainer>
     )
 }

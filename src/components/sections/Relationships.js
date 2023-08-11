@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react'
 
 // components
+import Loader from '../Loader'
 import ScatterChart from '../charts/ScatterChart'
 import Select from '../Select'
 
@@ -27,6 +28,7 @@ const Relationships = () => {
     const [yAxisLabel, setYAxisLabel] = useState('')
     const [selectedX, setSelectedX] = useState('')
     const [selectedY, setSelectedY] = useState('')
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         (async () => {
@@ -52,9 +54,13 @@ const Relationships = () => {
         (async () => {
             try {
 
+
+
                 if (!selectedX || !selectedY) {
                     return
                 }
+
+                setLoading(true)
 
                 const data = await getPlanetColumnValues([selectedX, selectedY])
 
@@ -90,6 +96,7 @@ const Relationships = () => {
                     ))
                 }
 
+                setLoading(false)
 
             }
             catch (error) {
@@ -140,30 +147,31 @@ const Relationships = () => {
 
                 <input type="checkbox" id="includeOutliers" name="includeOutliers" value="includeOutliers" onChange={handleIncludeOutliersChange} />
                 <label htmlFor="includeOutliers">Include Outliers</label>
-
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Nulls Removed:</th>
-                            <td>{numNullsRemoved}</td>
-                        </tr>
-                        <tr>
-                            <th>Outliers Removed:</th>
-                            <td>{numOutliersRemoved}</td>
-                        </tr>
-                        <tr>
-                            <th>Total Removed:</th>
-                            <td>{totalRemoved}</td>
-                        </tr>
-                        <tr>
-                            <th>Planets Included:</th>
-                            <td>{numPlanetsIncluded}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Nulls Removed:</th>
+                                <td>{numNullsRemoved}</td>
+                            </tr>
+                            <tr>
+                                <th>Outliers Removed:</th>
+                                <td>{numOutliersRemoved}</td>
+                            </tr>
+                            <tr>
+                                <th>Total Removed:</th>
+                                <td>{totalRemoved}</td>
+                            </tr>
+                            <tr>
+                                <th>Planets Included:</th>
+                                <td>{numPlanetsIncluded}</td>
+                            </tr>
+                        </tbody>
+                    </table>
             </Container>
 
-            <ScatterChart dataset={dataset} xAxisLabel={xAxisLabel} yAxisLabel={yAxisLabel} />
+            <ScatterChart showLoading={loading} dataset={dataset} xAxisLabel={xAxisLabel} yAxisLabel={yAxisLabel} />
+
+
         </Container>
     )
 }

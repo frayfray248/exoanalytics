@@ -19,7 +19,7 @@ import annotationPlugin from 'chartjs-plugin-annotation'
 // components
 import ChartContainer from './ChartContainer'
 
-const BarChart = ({ dataArray, labels }) => {
+const BarChart = ({ showLoading, dataArray, labels }) => {
 
     ChartJS.register(
         CategoryScale,
@@ -53,7 +53,7 @@ const BarChart = ({ dataArray, labels }) => {
         {}
 
     return (
-        <ChartContainer>
+        <ChartContainer showLoading={showLoading}>
             <Bar data={data} options={options} />
         </ChartContainer>
     )

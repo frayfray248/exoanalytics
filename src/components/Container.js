@@ -12,8 +12,11 @@ const Container = ({ children, className}) => {
 
 const StyledContainer = styled(Container)`
     
+    /* padding & margin */
     padding: 10px;
     margin-bottom: 10px;
+
+    /* border */
     border: ${props => props.border? `2px solid ${props.theme.colors.border}` : 'none'};
 `
 

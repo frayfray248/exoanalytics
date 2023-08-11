@@ -18,7 +18,7 @@ import annotationPlugin from 'chartjs-plugin-annotation'
 // components
 import ChartContainer from './ChartContainer'
 
-const DoughnutChart = ({ dataArray, labels }) => {
+const DoughnutChart = ({ showLoading, dataArray, labels }) => {
 
     ChartJS.register(
         CategoryScale,
@@ -51,7 +51,7 @@ const DoughnutChart = ({ dataArray, labels }) => {
         {}
 
     return (
-        <ChartContainer>
+        <ChartContainer showLoading={showLoading}>
             <Doughnut data={data} options={options} />
         </ChartContainer>
     )

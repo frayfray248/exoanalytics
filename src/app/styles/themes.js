@@ -5,7 +5,9 @@ export const mainTheme = {
         chartBackground: 'var(--pale-slate-blue)',
 
         text: 'var(--deep-slate-blue)',
-        border: 'var(--smoke-gray)'
+        border: 'var(--smoke-gray)',
+
+        loader: 'var(--smoke-gray)',
     }
     
 }

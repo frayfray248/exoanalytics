@@ -20,17 +20,20 @@ const Distributions = () => {
     const [planetData, setPlanetData] = useState([])
     const [labels, setLabels] = useState([])
     const [selectedChart, setSelectedChart] = useState('pie')
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         (async () => {
             try {
+
+                setLoading(true)
 
                 const data = await getPlanetAggregateRows(selectedColumn)
 
                 setPlanetData(data.map(item => item.count))
                 setLabels(data.map(item => item[selectedColumn]))
 
-                
+                setLoading(false)
             }
             catch (error) {
                 alert(error)
@@ -85,9 +88,9 @@ const Distributions = () => {
             </Container>
             {
                 new Map([
-                    ['pie', <PieChart dataArray={planetData} labels={labels}/>],
-                    ['doughnut', <DoughnutChart dataArray={planetData} labels={labels}/>],
-                    ['bar', <BarChart dataArray={planetData} labels={labels}/>]
+                    ['pie', <PieChart showLoading={loading} dataArray={planetData} labels={labels}/>],
+                    ['doughnut', <DoughnutChart showLoading={loading} dataArray={planetData} labels={labels}/>],
+                    ['bar', <BarChart showLoading={loading} dataArray={planetData} labels={labels}/>]
                 ]).get(selectedChart)
             }
         </Container>

@@ -13,11 +13,14 @@ const Time = () => {
     // state
     const [years, setYears] = useState([])
     const [datasets, setDatasets] = useState([])
+    const [loading, setLoading] = useState(true)
 
     // effects
     useEffect(() => {
         (async () => {
             try {
+
+                setLoading(true)
 
                 // fetching exoplanet data
                 const data = await getPlanetCountByYear()
@@ -38,6 +41,8 @@ const Time = () => {
 
                 // making chart horizontal axis labels from fetched data
                 setYears(data.map(planet => planet.disc_year))
+
+                setLoading(false)
 
             } catch (error) {
                 alert(error)
@@ -63,7 +68,7 @@ const Time = () => {
     return (
         <Container>
             <h1>Time</h1>
-            <TimeChart years={years} datasets={datasets} events={events} />
+            <TimeChart showLoading={loading} years={years} datasets={datasets} events={events} />
         </Container>
     )
 }

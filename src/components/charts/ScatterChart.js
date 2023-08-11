@@ -17,7 +17,7 @@ import annotationPlugin from 'chartjs-plugin-annotation'
 // components
 import ChartContainer from './ChartContainer'
 
-export default function ({ dataset, xAxisLabel, yAxisLabel }) {
+export default function ({ showLoading, dataset, xAxisLabel, yAxisLabel }) {
 
     ChartJS.register(
         CategoryScale,
@@ -61,7 +61,7 @@ export default function ({ dataset, xAxisLabel, yAxisLabel }) {
 
     return (
 
-        <ChartContainer>
+        <ChartContainer showLoading={showLoading}>
             <Scatter
                 options={options}
                 data={data}

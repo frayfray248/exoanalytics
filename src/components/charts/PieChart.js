@@ -18,7 +18,7 @@ import annotationPlugin from 'chartjs-plugin-annotation'
 // components
 import ChartContainer from './ChartContainer'
 
-const PieChart = ({ dataArray, labels }) => {
+const PieChart = ({ showLoading, dataArray, labels }) => {
 
     ChartJS.register(
         CategoryScale,
@@ -51,7 +51,7 @@ const PieChart = ({ dataArray, labels }) => {
         {}
 
     return (
-        <ChartContainer>
+        <ChartContainer showLoading={showLoading}>
             <Pie data={data} options={options} />
         </ChartContainer>
     )

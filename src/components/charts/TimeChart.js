@@ -17,7 +17,7 @@ import annotationPlugin from 'chartjs-plugin-annotation'
 // components
 import ChartContainer from './ChartContainer';
 
-export default function ({ years, datasets, events }) {
+export default function ({ showLoading, years, datasets, events }) {
 
     ChartJS.register(
         CategoryScale,
@@ -81,7 +81,7 @@ export default function ({ years, datasets, events }) {
     }
 
     return (
-        <ChartContainer>
+        <ChartContainer showLoading={showLoading}>
             <Line
 
                 datasetIdKey='id'
