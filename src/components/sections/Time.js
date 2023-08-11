@@ -1,0 +1,76 @@
+'use client'
+
+// modules
+import { useEffect, useState } from 'react'
+import { getPlanetCountByYear } from '@/app/utils/api';
+
+// components
+import Container from '../Container';
+import TimeChart from "../charts/TimeChart";
+
+const Time = () => {
+
+    // state
+    const [years, setYears] = useState([])
+    const [datasets, setDatasets] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    // effects
+    useEffect(() => {
+        (async () => {
+            try {
+
+                setLoading(true)
+
+                // fetching exoplanet data
+                const data = await getPlanetCountByYear()
+
+                // making chart datasets from fetched data
+                setDatasets([
+                    {
+                        // dataset for planets discovered each year
+                        label: 'Planets discovered',
+                        data: data.map(planet => planet.planet_count)
+                    },
+                    {
+                        // dataset for cumulative planets discovered
+                        label: 'Cumulative planets discovered',
+                        data: data.map(planet => planet.planet_count).reduce((a, x, i) => [...a, x + (a[i - 1] || 0)], [])
+                    },
+                ])
+
+                // making chart horizontal axis labels from fetched data
+                setYears(data.map(planet => planet.disc_year))
+
+                setLoading(false)
+
+            } catch (error) {
+                alert(error)
+            }
+        })()
+    }, [])
+
+    const events = [
+        {
+            year: 1995,
+            label: 'First exoplanet documented'
+        },
+        {
+            year: 2009,
+            label: 'Kepler launched'
+        },
+        {
+            year: 2021,
+            label: 'JWST launched'
+        }
+    ]
+
+    return (
+        <Container>
+            <h1>Time</h1>
+            <TimeChart showLoading={loading} years={years} datasets={datasets} events={events} />
+        </Container>
+    )
+}
+
+export default Time;
