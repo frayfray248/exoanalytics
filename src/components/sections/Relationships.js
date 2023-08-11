@@ -9,6 +9,7 @@ import Select from '../Select'
 
 // utils
 import { getPlanetColumnNames, getPlanetColumnValues } from '@/app/utils/api'
+import { removeOutliersFromObjectArray } from '@/app/utils/statistics'
 
 import Container from '../Container';
 
@@ -17,6 +18,11 @@ const Relationships = () => {
     // state
     const [dataset, setDataset] = useState([])
     const [columns, setColumns] = useState([])
+    const [numNullsRemoved, setNumNullsRemoved] = useState(0)
+    const [numOutliersRemoved, setNumOutliersRemoved] = useState(0)
+    const [includeOutliersChecked, setIncludeOutliersChecked] = useState(false)
+    const [totalRemoved, setTotalRemoved] = useState(0)
+    const [numPlanetsIncluded, setNumPlanetsIncluded] = useState(0)
     const [xAxisLabel, setXAxisLabel] = useState('')
     const [yAxisLabel, setYAxisLabel] = useState('')
     const [selectedX, setSelectedX] = useState('')
@@ -52,7 +58,38 @@ const Relationships = () => {
 
                 const data = await getPlanetColumnValues([selectedX, selectedY])
 
-                setDataset(data.filter(planet => planet[selectedX] && planet[selectedY]).map(planet => ({ x: planet[selectedX], y: planet[selectedY] })))
+                const nullFilteredData = data.filter(planet => planet[selectedX] && planet[selectedY])
+
+                if (includeOutliersChecked) {
+                    setNumNullsRemoved(data.length - nullFilteredData.length)
+                    setNumOutliersRemoved(0)
+                    setTotalRemoved(data.length - nullFilteredData.length)
+                    setNumPlanetsIncluded(nullFilteredData.length)
+                    setDataset(nullFilteredData.map(
+                        planet => (
+                            {
+                                x: planet[selectedX],
+                                y: planet[selectedY]
+                            })
+                    ))
+                }
+                else {
+                    const outlierFilteredData = removeOutliersFromObjectArray(nullFilteredData, 3)
+
+                    setNumNullsRemoved(data.length - nullFilteredData.length)
+                    setNumOutliersRemoved(nullFilteredData.length - outlierFilteredData.length)
+                    setTotalRemoved(data.length - outlierFilteredData.length)
+                    setNumPlanetsIncluded(outlierFilteredData.length)
+
+                    setDataset(outlierFilteredData.map(
+                        planet => (
+                            {
+                                x: planet[selectedX],
+                                y: planet[selectedY]
+                            })
+                    ))
+                }
+
 
             }
             catch (error) {
@@ -60,7 +97,7 @@ const Relationships = () => {
             }
 
         })()
-    }, [selectedX, selectedY])
+    }, [selectedX, selectedY, includeOutliersChecked])
 
     const handleAxisSelectChange = (event) => {
 
@@ -79,6 +116,12 @@ const Relationships = () => {
 
     }
 
+    const handleIncludeOutliersChange = (event) => {
+
+        setIncludeOutliersChecked(event.target.checked)
+
+    }
+
 
     return (
         <Container>
@@ -94,6 +137,30 @@ const Relationships = () => {
                     id="scatterChartSelectY"
                     items={columns.map((column) => ({ value: column.column_name, text: column.description }))}
                     changeHandler={handleAxisSelectChange} />
+
+                <input type="checkbox" id="includeOutliers" name="includeOutliers" value="includeOutliers" onChange={handleIncludeOutliersChange} />
+                <label htmlFor="includeOutliers">Include Outliers</label>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Nulls Removed:</th>
+                            <td>{numNullsRemoved}</td>
+                        </tr>
+                        <tr>
+                            <th>Outliers Removed:</th>
+                            <td>{numOutliersRemoved}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Removed:</th>
+                            <td>{totalRemoved}</td>
+                        </tr>
+                        <tr>
+                            <th>Planets Included:</th>
+                            <td>{numPlanetsIncluded}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </Container>
 
             <ScatterChart dataset={dataset} xAxisLabel={xAxisLabel} yAxisLabel={yAxisLabel} />
